@@ -96,9 +96,15 @@ function loadCityInfos(cityValue) {
     xhr.send(null);
 }
 
+function showCityList() {
+    for(let i=0; i<)
+}
+
 var cityInput = document.getElementById('cityInput');
 cityInput.addEventListener('keyup', function(e) {
     if(e.key === 'Enter'){
         loadCityInfos(e.target.value);
+    }else{
+        showCityList();
     }
 });

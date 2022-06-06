@@ -96,9 +96,9 @@ function loadCityInfos(cityValue) {
     xhr.send(null);
 }
 
-function showCityList() {
-    for(let i=0; i<)
-}
+// function showCityList() {
+//     for(let i=0; i<)
+// }
 
 var cityInput = document.getElementById('cityInput');
 cityInput.addEventListener('keyup', function(e) {

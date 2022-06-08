@@ -189,7 +189,7 @@ cityInput.addEventListener('keyup', function(e) {
         listCities.style.display= 'none';
 
     } else {
-
+        divSelected = -1;
         getCityID(e.target.value);
 
     }

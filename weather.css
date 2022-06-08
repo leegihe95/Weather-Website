@@ -20,14 +20,17 @@ h1{
 }
 #weatherResult {
 	width: 50%;
+	margin: auto;
 	text-align: center;
+	position: absolute;
+	top: 18%;
+	z-index: -1;
 }
 
 input {
 	width: 400px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-bottom: 10px;
 	border-radius: 5px;
 	border: 2px solid steelblue;
 	outline: 1px solid steelblue;
@@ -58,6 +61,18 @@ input {
 	border: 2px solid white;
 	background-color: rgba(255, 255, 255, 0.3);
 	border-radius: 5px;
+}
+
+/* RESULTS */
+.results{
+	border: 1px solid lightblue;
+	background-color: white;
+	width: 400px;
+	text-align: center;
+}
+
+.highlight {
+	background-color: lightblue;
 }
 
 @keyframes minhoca{

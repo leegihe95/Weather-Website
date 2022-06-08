@@ -1,6 +1,10 @@
 // API Key: 0840207763b3bb99dc2cce93ddb094d0
+let cityInput = document.getElementById('cityInput');
+let listCities = document.getElementById('listCities');
+let divs = listCities.children; //array of my results
+let divSelected = -1; //setting the input "index" position as -1
 
-//function for second to fifth days
+// Apply weather results to respective divs
 /**
  * 
  * @param {i} iValue index number in array
@@ -66,7 +70,10 @@ function nextWeather (dataOfTheDay, extendedInfos = false){
     return dayOfWeek;
 }
 
+// Load city weather
 function loadCityInfos(cityValue) {
+    listCities.style.display= 'none';
+
     let weatherResult = document.getElementById('weatherResult');
     weatherResult.innerHTML = "";
 
@@ -96,15 +103,94 @@ function loadCityInfos(cityValue) {
     xhr.send(null);
 }
 
-// function showCityList() {
-//     for(let i=0; i<)
-// }
+// Fetch JSON file + create array with 10 matching cities
+function getCityID(inCity) {
+    
+    const cityList = fetch("http://localhost/weather_camila/city.list.min.json");
+    cityList.then(response => response.json())
+    .then(cities => {
+        const rgx = new RegExp(`^${inCity}`, 'gi');
+        let matchingCities = [];
+        
+        cities.forEach(function(city){
+            if(rgx.test(city.name) && matchingCities.length < 10) {
+                matchingCities.push(city);
+            }
+        });
+        // console.log(matchingCities);
+        showCityList(matchingCities);
 
-var cityInput = document.getElementById('cityInput');
+    });
+}
+
+
+// Display results
+function showCityList(matchingCities) {
+    listCities.style.display = matchingCities.length ? 'block' : 'none';
+    
+    if(matchingCities.length){
+        listCities.innerHTML= "";
+
+        for(let i=0; i<matchingCities.length; i++){
+            let outputCity = document.createElement('div');
+            outputCity.className = "results";
+            outputCity.textContent = matchingCities[i].name + ' - ' + matchingCities[i].country;
+            
+            listCities.appendChild(outputCity);
+
+            // mouse hover event
+            outputCity.addEventListener('mouseover', function(e){
+                e.target.style.backgroundColor = "lightblue";
+                e.target.style.cursor = "pointer";
+            })
+            outputCity.addEventListener('mouseout', function(e){
+                e.target.style.backgroundColor = "";
+            })
+            outputCity.addEventListener('click', function(e){
+                cityInput.value = matchingCities[i].name;
+                loadCityInfos(cityInput.value);
+                listCities.innerHTML="";
+                cityInput.focus();
+            })
+
+        }
+    }    
+    
+}
+
+
 cityInput.addEventListener('keyup', function(e) {
-    if(e.key === 'Enter'){
+    if(e.key == "ArrowDown") {
+        if(divSelected > 9) {
+            divSelected = 9;
+            return;
+        } else {
+            divs[++divSelected].classList.add("highlight");
+            divs[divSelected-1].classList.remove("highlight");
+        }
+        
+    } else if(e.key == "ArrowUp") {
+        if(divSelected < 0){
+            divSelected = 0;
+            return;
+        } else {
+            divs[--divSelected].classList.add("highlight"); 
+            divs[divSelected+1].classList.remove("highlight");
+        }  
+
+        
+    } else if(e.key === 'Enter') {
+        
+        cityInput.value = divs[divSelected].textContent.split(' - ').shift();
         loadCityInfos(e.target.value);
-    }else{
-        showCityList();
+
+    } else if(cityInput.value == "") {
+
+        listCities.style.display= 'none';
+
+    } else {
+
+        getCityID(e.target.value);
+
     }
 });

@@ -6,7 +6,7 @@ let divSelected = -1; //setting the input "index" position as -1
 // Fetch JSON file + create array with 10 matching cities
 function getCityID(inCity) {
     
-    const cityList = fetch("http://localhost/weather_camila/city.list.min.json");
+    const cityList = fetch("./city.list.min.json");
     cityList.then(response => response.json())
     .then(cities => {
         const rgx = new RegExp(`^${inCity}`, 'gi');

@@ -64,8 +64,10 @@ function loadCityInfos(cityValue) {
     let weatherResult = document.getElementById('weatherResult');
     weatherResult.innerHTML = "";
 
+    var key = config.apikey;
+
     var xhr = new XMLHttpRequest ();
-    var myURL = `http://api.openweathermap.org/data/2.5/forecast?q=${cityValue}&appid=0840207763b3bb99dc2cce93ddb094d0&units=metric`;
+    var myURL = `http://api.openweathermap.org/data/2.5/forecast?q=${cityValue}&appid=${key}&units=metric`;
     xhr.open('GET', myURL);
     xhr.addEventListener('readystatechange', () => {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
